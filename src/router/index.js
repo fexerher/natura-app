@@ -36,6 +36,10 @@ const routes = [
   {
     path: '/',
     ...main
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/404.vue')
   }
  
 ]

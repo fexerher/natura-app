@@ -43,7 +43,7 @@ export const loadcart = ({commit}) => {
 
 export const pay = async (_ , carrito ) => {
 
-    if(!carrito) return 
+    if(Object.keys(carrito).length === 0) return 
 
      const cart =  Object.values( carrito ).map((e) => {
         return { title: e.nombre, quantity: +e.cantidad , description: e.descripcion, unit_price: e.precio }
@@ -54,7 +54,6 @@ export const pay = async (_ , carrito ) => {
             ...cart
         ]
      }
-
 
 
     try {

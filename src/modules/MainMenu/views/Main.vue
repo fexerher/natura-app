@@ -2,7 +2,8 @@
   <div>
       <v-parallax
         height="800"
-        src="@/assets/img/fondo-principal.jpg"
+        style="object-fit: center;"
+        src="https://res.cloudinary.com/ninety98/image/upload/v1656550526/fondo_principal_1_yjfgsu.jpg"
       >
       <v-row
           align="center"
@@ -128,7 +129,7 @@ export default {
     },
     addCart( producto ){
        this.addcart( producto )
-      
+       this.dialog = true
     },
     goToCart(){
       this.dialog = false

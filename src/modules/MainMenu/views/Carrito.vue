@@ -119,13 +119,15 @@ export default {
            } 
         },
         async payAction( ){
+            
             const {id} = await this.pay( this.carrito )
+            if(!id) return
             this.idPreference = id
             
         },
         setLoaded(){
 
-           const mp =  new window.MercadoPago('APP_USR-f92feba3-852a-4e81-a2b8-2014f12fac46',{
+           const mp =  new window.MercadoPago('APP_USR-8a324560-dc97-40f4-b011-8ce58c282e7d',{
                 locale: "es-PE",
            })
 
