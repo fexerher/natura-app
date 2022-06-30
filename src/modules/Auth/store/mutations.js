@@ -1,17 +1,21 @@
 
 
-export const signInUser = ( state, { access_token, role, user } ) => {
+export const signInUser = ( state, { token , usuario   } ) => {
 
-    if( access_token ){
-        state.access_token = access_token
-        localStorage.setItem('access_token', access_token )
+    if( token ){
+        state.access_token = token
+        localStorage.setItem('x-token', token )
     }
-    if( role ){
-        state.role = role
-    }
-    if( user ){
-        state.user = user
-        localStorage.setItem('user', user )
+    if( usuario ){
+        state.user = usuario
     }
     state.status = "authenticated"
+}
+
+
+export const logout = (state) => {
+    state.access_token = null
+    state.user = null
+    localStorage.removeItem('x-token')
+    state.status = "not-authenticated"
 }

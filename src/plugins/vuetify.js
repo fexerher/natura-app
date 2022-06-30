@@ -2,7 +2,11 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/lib/util/colors'
+import es from 'vuetify/src/locale/es.ts'
 Vue.use(Vuetify)
+
+
+
 
 const opts = {
     theme: {
@@ -18,6 +22,11 @@ const opts = {
           },
         },
       },
+      lang: {
+        locales: { es },
+        current: 'es'
+      }
 }
 
 export default new Vuetify(opts)
+

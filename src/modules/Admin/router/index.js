@@ -2,6 +2,7 @@
 
 
 const mainMenuRouter = {
+    name: 'admin',
     redirect: '/admin/dashboard',
     component: () => import('../layouts/MainMenuLayout.vue'),
     children: [
@@ -24,6 +25,11 @@ const mainMenuRouter = {
             path: '/admin/usuarios' , 
             name: 'usuarios', 
             component: () => import('../views/Usuarios.vue') 
+        },
+        { 
+            path: '/admin/compras' , 
+            name: 'compras', 
+            component: () => import('../views/Compras.vue') 
         },
     ]
 }

@@ -3,10 +3,10 @@
           <v-container>
              <h1>Login</h1>
              <v-form >
-                <v-text-field v-model="form.username" >
+                <v-text-field v-model="form.email" label="email" >
 
                 </v-text-field>
-                <v-text-field type="password" v-model="form.password" >
+                <v-text-field type="password" v-model="form.password" label="password" >
 
                 </v-text-field>
                 <v-btn color="primary" @click.prevent="logIn"  >
@@ -23,9 +23,9 @@ import { mapActions } from 'vuex';
 export default {
     data(){
       return {
-        form: {
-          username: 'admin',
-          password: 'secret'
+        form: { 
+            "email": "jimzito_13@gmail.com",
+            "password": "123456789"
         }
       }
     },

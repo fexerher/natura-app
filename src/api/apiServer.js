@@ -1,17 +1,34 @@
 
 
 
+import router from '@/router';
 import axios from 'axios'
 
-const token = localStorage.getItem('access_token')
-
 const apiServer = axios.create({
-    baseURL: 'http://promolider.xyz/api/v1',
+    baseURL: 'http://localhost:8081/api',
 })
-
-apiServer.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 apiServer.defaults.headers.post['Accept'] = 'application/json';
 apiServer.defaults.headers.post['Content-Type'] = 'application/json';
 
+apiServer.interceptors.request.use( (config) =>  {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with respo
+    config.headers = {
+      'x-token': localStorage.getItem('x-token')
+    }
+    return config;
+  })
+  apiServer.interceptors.response.use( (response) =>  {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with respo
+    
+    return response;
+  }, ( error ) => {
+    
+    if(error.response.status === 401){
+      router.push({name: 'login'})
+    }
 
+    return error
+  })
 export default apiServer

@@ -2,14 +2,16 @@ import apiServer from "@/api/apiServer"
 
 
 
-export const singInUser = async ( { commit } , payload ) => {
+export const singInUser = async ( { commit }, payload ) => {
 
         try {
             const {  data   } = await apiServer.post('/auth/login', payload )
 
-            const { access_token , role , user } = data.data
+            const { token , usuario } = data
 
-            commit('signInUser', { access_token , role , user } )
+            // const { access_token , rol , user } = data.data
+
+            commit('signInUser', { token , usuario } )
 
             return { ok : true }
             
@@ -22,3 +24,28 @@ export const singInUser = async ( { commit } , payload ) => {
 
 }
 
+export const checkAuthentication = async ({commit}) => {
+    
+    const token =  localStorage.getItem('x-token')
+    if(!token){
+        commit('logout')
+        return {ok : false , message: 'no hay token'}
+    }
+    
+    try {
+        const {  data   } = await apiServer.post('/auth/lookup', {token})
+        const { usuario } = data
+        
+        const { rol } = usuario
+        
+        commit('signInUser', { token , usuario } )
+
+        return { ok: true, rol }
+        
+    } catch (error) {
+        commit('logout')
+        return {ok:false}
+        
+    }
+
+} 

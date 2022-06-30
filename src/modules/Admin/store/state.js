@@ -2,5 +2,6 @@
 
 
 export default () => ({
-    notifications: []
+    categorias: [],
+    cantCategorias: 0
 }) 
