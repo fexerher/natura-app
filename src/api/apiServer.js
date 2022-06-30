@@ -5,7 +5,7 @@ import router from '@/router';
 import axios from 'axios'
 
 const apiServer = axios.create({
-    baseURL: 'http://localhost:8081/api',
+    baseURL: 'https://server-natura.herokuapp.com/api',
 })
 apiServer.defaults.headers.post['Accept'] = 'application/json';
 apiServer.defaults.headers.post['Content-Type'] = 'application/json';
