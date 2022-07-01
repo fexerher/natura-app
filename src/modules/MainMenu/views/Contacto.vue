@@ -1,5 +1,5 @@
 <template>
-  <v-container style="height: 704px" >
+  <v-container style="height: 729px" >
 
       <h1>Contactanos</h1>
       <v-card>
