@@ -120,7 +120,7 @@ export default {
         },
         async payAction( ){
             
-            const {id} = await this.pay( this.carrito )
+            const { id  } = await this.pay( this.carrito )
             if(!id) return
             this.idPreference = id
             

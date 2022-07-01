@@ -9,8 +9,8 @@
 
       <v-app-bar-nav-icon v-show="$vuetify.breakpoint.xs" ></v-app-bar-nav-icon>
 
-      <v-toolbar-title  >
-            <h2  style="color: #349f06">Santa Natura</h2 >
+      <v-toolbar-title style="cursor: pointer" @click="$router.push({name:'main'}).catch(()=> {})" >
+            <h2  style="color: #349f06">Santa Natura <span class="subtitle-1 font-weight-bold" >Huaycan</span> </h2 >
       </v-toolbar-title>
       <v-spacer></v-spacer>
 

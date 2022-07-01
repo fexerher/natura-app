@@ -15,6 +15,7 @@
               text
               rounded
               class="my-2"
+              :to="{name: link.to}"
             >
               {{ link.name }}
             </v-btn>
@@ -34,9 +35,9 @@ export default {
     data(){
       return {
         links: [
-            { name: 'Home', to: ''},
-            { name: 'About Us', to: ''},
-            { name: 'Contact Us', to: ''}
+            { name: 'Inicio', to: 'main'},
+            { name: 'Nosotros', to: 'nosotros'},
+            { name: 'Contacto', to: 'contacto'}
         ],
       }
   }

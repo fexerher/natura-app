@@ -55,7 +55,7 @@
                 <v-card-title class="text-capitalize">{{producto.nombre}}</v-card-title>
 
                 <v-card-subtitle>
-                  <div>{{producto.idcategoria}}</div>
+                  <div class="text-capitalize">{{producto.descripcion}}</div>
                   <div class="subtitle-1">S/.{{producto.precio}}</div>
                 </v-card-subtitle>
 

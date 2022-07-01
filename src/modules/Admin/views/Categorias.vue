@@ -20,7 +20,7 @@
       <v-toolbar
         flat
       >
-       <h1 class="text-start">Categorias</h1>
+       <h1 class="text-start text-capitalize">{{$route.name}}</h1>
         <v-spacer></v-spacer>
 
          <v-text-field

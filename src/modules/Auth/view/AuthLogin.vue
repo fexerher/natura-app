@@ -1,6 +1,9 @@
 <template>
     <v-main app>
-          <v-container>
+          <v-container  >
+
+            <v-card max-width="700px" style="margin: 0 auto" class="pa-5" >
+
              <h1>Login</h1>
              <v-form >
                 <v-text-field v-model="form.email" label="email" >
@@ -13,6 +16,7 @@
                   Sign In
                 </v-btn>
              </v-form>
+            </v-card>
           </v-container>
       </v-main>
   
@@ -24,8 +28,8 @@ export default {
     data(){
       return {
         form: { 
-            "email": "jimzito_13@gmail.com",
-            "password": "123456789"
+            "email": "",
+            "password": ""
         }
       }
     },
