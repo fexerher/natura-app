@@ -1,32 +1,35 @@
 <template>
-     <v-footer
-          class="mt-5"
-          color="#2c9f32"
-          padless
+ <v-footer
+    color="green"
+    padless
+  >
+    <v-row
+      justify="center"
+      no-gutters
+    >
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          color="white"
+          text
+          rounded
+          class="my-2"
+          :href="icon.link"
+          target="_blank"
         >
-          <v-row
-            justify="center"
-            no-gutters
-          >
-            <v-btn
-              v-for="(link, index) in links"
-              :key="index"
-              color="white"
-              text
-              rounded
-              class="my-2"
-              :to="{name: link.to}"
-            >
-              {{ link.name }}
-            </v-btn>
-            <v-col
-              class="py-4 text-center white--text"
-              cols="12"
-            >
-              {{ new Date().getFullYear() }} — <strong>Santa Natura</strong>
-            </v-col>
-          </v-row>
-        </v-footer>
+          <v-icon left>
+            {{ icon.name }}
+          </v-icon>
+          {{icon.contacto}}
+        </v-btn>
+      <v-col
+        class="green py-4 text-center white--text"
+        cols="12"
+      >
+        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+      </v-col>
+    </v-row>
+  </v-footer>
 </template>
 
 <script>
@@ -39,6 +42,10 @@ export default {
             { name: 'Nosotros', to: 'nosotros'},
             { name: 'Contacto', to: 'contacto'}
         ],
+        icons: [
+          { name: 'mdi-whatsapp', contacto: '995985287'},
+          {name: 'mdi-facebook', contacto: '' , link: 'https://www.facebook.com/SantaNaturaHuaycan/'},
+      ],
       }
   }
 }   
