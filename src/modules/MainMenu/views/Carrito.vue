@@ -111,7 +111,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions('main', ['pay','decrementcart', 'increment']),
+        ...mapActions('main', ['pay','decrementcart', 'increment', 'paymentStatus']),
         async validateCantidad( item ){
            if(item.cantidad <= 10){
                 this.increment(item)
@@ -120,11 +120,10 @@ export default {
         },
         async payAction( ){
             
-            const { id  } = await this.pay( this.carrito )
-            if(!id) return
+            const { id } = await this.pay( this.carrito )
+
             this.idPreference = id
             
-            console.log(this.idPreference );
         },
         setLoaded(){
 
@@ -155,6 +154,18 @@ export default {
 
             this.decrementcart( id )
             window.location.reload()
+        },
+        async checkPayment( status, payment_id ){
+
+            if(!status && !payment_id) return 
+            
+            if(status === 'approved'){
+
+               const { ok } = await this.paymentStatus( payment_id )
+
+                if(!ok) return 
+                this.$router.push({name: 'carrito'}) 
+            }
         }
 
     },
@@ -174,7 +185,7 @@ export default {
 
         this.createScriptMercadoPago()
 
-        
+        this.checkPayment( this.$route.query.status, this.$route.query.payment_id )
     },
 
 }

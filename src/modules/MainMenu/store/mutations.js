@@ -1,5 +1,4 @@
 
-
 export const setproductos = ( state , { rows, count }) => {
     state.cantidad = count
     state.productos = rows
@@ -36,5 +35,12 @@ export const increment = (state, { cantidad , id }) => {
 
     state.carrito = users
 
+
+}
+
+export const paymentStatus = ( state ) => {
+
+    localStorage.removeItem('xcstrd')
+    state.carrito = {}
 
 }

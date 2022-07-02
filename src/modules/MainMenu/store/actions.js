@@ -43,26 +43,25 @@ export const loadcart = ({commit}) => {
 
 export const pay = async (_ , carrito ) => {
 
-    if(Object.keys(carrito).length === 0) return 
-
-     const cart =  Object.values( carrito ).map((e) => {
-        return { title: e.nombre, quantity: +e.cantidad , description: e.descripcion, unit_price: e.precio }
-     })
-     
-     const productos = {
-        productos:[
-            ...cart
-        ]
-     }
-
-
     try {
+        if(Object.keys(carrito).length === 0) return 
+    
+         const cart =  Object.values( carrito ).map((e) => {
+            return { title: e.nombre, quantity: +e.cantidad , description: e.descripcion, unit_price: e.precio }
+         })
+         
+         const productos = {
+            productos:[
+                ...cart
+            ]
+         }
        const {data} = await apiServer.post('/pay', productos )
-        
-       const {id} = data.response
-       return { id }
+       
+       const { id } = data.response
+
+       return { ok:true , id }
     } catch (error) {
-        throw new Error('Hable con el admin', error )
+        return { ok: false  }
     }
 
 
@@ -93,5 +92,28 @@ export const increment =   ({commit}, payload ) => {
     localStorage.setItem( 'xcstrd', JSON.stringify(carrito))
 
     commit('increment', payload)
+
+}
+
+
+export const paymentStatus = async ( { commit } , id ) => {
+
+    try {
+          const  datos  = await apiServer.get(`/pay/notificacion/${id}`)
+          const { status } = datos
+
+          if( status === 200 ){
+                commit('paymentStatus')
+
+                return {ok:true, datos}
+          }
+
+    } catch (error) {
+
+        return {ok: false}
+
+    }
+  
+
 
 }
