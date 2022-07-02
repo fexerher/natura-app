@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-data-table
-    
+      item-key="name"
       :headers="headers"
       :items="desserts"
       :search="search"
@@ -9,6 +9,11 @@
       class="elevation-2"
       style="max-width: 1200px; margin: 0 auto"
     >    
+     <template v-slot:[`item.img`]="{ item }">
+      <v-img :src="item.img"  height="50" width="50">
+
+      </v-img>
+      </template>
         <template v-slot:top>
             <v-toolbar
               flat
@@ -64,17 +69,7 @@
                           
                         ></v-text-field>
                       </v-col>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                      >
-                        <v-text-field
-                          v-model="editedItem.descripcion"
-                          label="Descripción"
-                          
-                        ></v-text-field>
-                      </v-col>
+                     
                       <v-col
                         cols="12"
                         sm="6"
@@ -86,8 +81,6 @@
                           
                         ></v-text-field>
                       </v-col>
-                    </v-row>
-                    <v-row>
                         <v-col
                           cols="12"
                           sm="6"
@@ -99,6 +92,8 @@
                             
                           ></v-text-field>
                         </v-col>
+                    </v-row>
+                    <v-row>
                         <v-col
                           cols="12"
                           sm="6"
@@ -110,6 +105,33 @@
                             
                           ></v-text-field>
                         </v-col>
+                          <v-col
+                          cols="12"
+                          sm="6"
+                          md="8"
+                        >
+                          <v-file-input
+                            v-model="editedItem.imagen"
+                            accept="image/png, image/jpeg, image/bmp"
+                            placeholder="Pick an avatar"
+                            prepend-icon="mdi-camera"
+                            label="Imagen Producto"
+                          ></v-file-input>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="12"
+                          >
+                            <v-textarea
+                              outlined
+                              v-model="editedItem.descripcion"
+                              label="Descripción"
+                              
+                            ></v-textarea>
+                          </v-col>
                       </v-row>
                   </v-container>
                 </v-card-text>
@@ -213,6 +235,11 @@ export default {
               align: 'start',
               value: 'idcategoria',
             },
+            {
+              text: 'Imagen',
+              align: 'start',
+              value: 'img',
+            },
             { text: 'Actions', value: 'actions'},
           ],
           editedIndex: -1,
@@ -222,6 +249,8 @@ export default {
             precio: '',
             stock: '',
             idcategoria: '',
+            imagen: [],
+            id: ''
           },
           defaultItem: {
             nombre: '',
@@ -263,6 +292,7 @@ export default {
 
       deleteItemConfirm () {
         this.desserts.splice(this.editedIndex, 1)
+        this.deleteproducto( this.editedItem )
         this.closeDelete()
       },
 
@@ -282,12 +312,21 @@ export default {
         })
       },
 
-      save () {
+      async save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        
+          const { ok } =  await this.editarImagen(this.editedItem )
+
+          if(!ok){
+            console.log('error');
+          }else{
+            console.log('registrado correctamente ');
+           Object.assign(this.desserts[this.editedIndex], this.editedItem)
+
+          }
         } else {
 
-          const {ok} =  this.saveproducto( this.editedItem )
+          const {ok} = await this.saveproducto( this.editedItem )
           if(!ok){
             console.log('error');
           }else{
@@ -297,7 +336,7 @@ export default {
         }
         this.close()
       },
-      ...mapActions('admin',['getproductos', 'saveproducto']),
+      ...mapActions('admin',['getproductos', 'saveproducto' , 'editarImagen', 'deleteproducto']),
     },
     created(){
       this.getProductos()

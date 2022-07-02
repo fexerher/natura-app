@@ -1,5 +1,5 @@
 <template>
-<div style="height: 90vh">
+<div style="min-height: 90vh">
   <v-container v-if="productos">
         <div>
               <h1 class="text-center my-6">Tienda</h1>
@@ -27,7 +27,7 @@
 
                     <v-img
                       height="250"
-                      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                      :src="producto.img"
                     ></v-img>
 
                     <v-card-title class="text-capitalize">{{producto.nombre}}</v-card-title>

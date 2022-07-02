@@ -83,7 +83,7 @@ export default {
           { name: 'Categorias', icon: 'mdi-folder', nameRouter: 'categorias' },
           { name: 'Productos', icon: 'mdi-cube-outline', nameRouter: 'productos' },
           { name: 'Usuarios', icon: 'mdi-account', nameRouter: 'usuarios' },
-          { name: 'Compras', icon: 'mdi-cart', nameRouter: 'compras' },
+          { name: 'Ventas', icon: 'mdi-cart', nameRouter: 'compras' },
 
         ],
         items: [

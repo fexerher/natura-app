@@ -17,6 +17,7 @@ export const filterCategorias = ( state ) => {
 }
 
 export const filterProductos = ( state ) => {
+    if(!state.productos)return
 
     const productos = state.productos.map(( e ) => {
 

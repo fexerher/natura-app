@@ -4,7 +4,7 @@
     <v-container v-if="!successCheckout">
         
         <h1 class="text-center my-8">CARRITO DE COMPRAS</h1>
-        <v-simple-table height="573px" v-show="Object.keys(carrito).length" >
+        <v-simple-table height="593px" v-show="Object.keys(carrito).length" >
             <template v-slot:default >
             <thead>
                 <tr>
@@ -36,7 +36,7 @@
                 :key="item.id"
                 >
                 <td><v-btn @click="decrementCart(item.id)" icon><v-icon>mdi-close-circle-outline</v-icon></v-btn></td>
-                <td ><v-img width="80px" src="https://lagunaclothes.com/wp-content/uploads/2022/05/E7807CFA-F073-4648-BEAB-DBCB596BFB9F.jpeg"></v-img></td>
+                <td ><v-img width="80px" :src="item.img"></v-img></td>
                 <td>{{ item.nombre }}</td>
                 <td>S/.{{ item.precio }}</td>
                 <td><v-text-field type="number" :rules="rules" min="1" max="10" v-model="item.cantidad" @change="validateCantidad(item)" ></v-text-field></td>
@@ -54,13 +54,13 @@
            
             </template>
         </v-simple-table>
-            <v-card v-if="!Object.keys(carrito).length" class="text-center" elevation="0" height="573px" color="transparent">
+            <v-card v-if="!Object.keys(carrito).length" class="text-center" elevation="0"  min-height="63.4vh" color="transparent">
                 <v-card-text>
                     <div class="text-h5">Carrito Vacio</div>
                 </v-card-text>
             </v-card>
     </v-container>
-        <v-card v-if="successCheckout" class="elevation-0" color="transparent" height="77vh">
+        <v-card v-if="successCheckout" class="elevation-0" color="transparent" height="90vh" >
                   <v-row justify="center" class="text-center pt-10" >
                       <v-icon color="green" size="200">
                           mdi-check-circle-outline
@@ -124,10 +124,11 @@ export default {
             if(!id) return
             this.idPreference = id
             
+            console.log(this.idPreference );
         },
         setLoaded(){
 
-           const mp =  new window.MercadoPago('APP_USR-8a324560-dc97-40f4-b011-8ce58c282e7d',{
+           const mp =  new window.MercadoPago('TEST-0e1908d5-9c20-4ebd-86a3-424e06229574',{
                 locale: "es-PE",
            })
 

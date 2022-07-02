@@ -53,7 +53,7 @@ export const editarcategoria = async ( {commit}, {id, nombre} ) => {
 export const getproductos = async ({commit}  ) => {
     try {
         const { data } = await apiServer.get('/productos')
-        console.log(data);
+        
         const { rows, count } = data
 
        commit('setproductos', { rows , count })
@@ -65,13 +65,31 @@ export const getproductos = async ({commit}  ) => {
 
 }
 
-export const saveproducto = async ( { commit },  payload  ) => {
+export const saveproducto = async ( {commit},  { idcategoria, descripcion , nombre, imagen, precio , stock  }  ) => {
     
+    const producto = { idcategoria, descripcion , nombre,  precio , stock  }
+    
+
     try {
-       const { data } = await apiServer.post('/productos', payload )
+
+        const formData = new FormData()
+        formData.append('archivo', imagen )
 
 
-      commit('saveproducto', data )
+       const { data } =  await  apiServer.post('/productos', producto )
+          
+        
+       const  resp  = await  apiServer.put(`/uploads/productos/${data.id}`, formData)
+        
+       const { img }  = resp.data 
+
+      const payload = {
+        ...data,
+        img
+      }
+
+
+      commit('saveproducto', payload )
        
        return {ok: true }
 
@@ -85,7 +103,7 @@ export const saveproducto = async ( { commit },  payload  ) => {
 export const getusuarios = async ({commit}  ) => {
     try {
         const { data } = await apiServer.get('/usuarios')
-        console.log(data);
+      
         const { rows, count } = data
 
        commit('setusuarios', { rows , count })
@@ -138,6 +156,59 @@ export const deleteusuario = async ( {commit}, payload ) => {
 
        
        commit('deleteusuario', data )
+       
+       return {ok: true }
+
+   } catch (error) {
+       console.log(error);
+       return {ok: false}
+   }
+
+}
+
+
+export const editarImagen = async ( {commit},  payload ) => {
+
+    const { imagen, id }  = payload
+
+    if(!imagen) return 
+    
+    try {
+
+        const formData = new FormData()
+        formData.append('archivo', imagen)
+       
+        
+        const promiseArr = [
+            apiServer.put(`/uploads/productos/${id}`, formData),
+            apiServer.put(`/productos/${id}`, payload )
+         ]
+
+        const [ respuestas, respuestas2 ] = await Promise.all( promiseArr )
+
+       const producto = {
+         ...respuestas.data,
+         ...respuestas2.data,
+       }
+
+       commit('updateImagen', producto )
+       
+       return {ok: true }
+
+   } catch (error) {
+        return {ok: false }
+   }
+
+}
+
+
+
+export const deleteproducto = async ( {commit}, payload ) => {
+    try {
+       const { data } = await apiServer.delete(`/productos/${payload.id}`)
+
+       
+       commit('deleteproducto', data )
        
        return {ok: true }
 

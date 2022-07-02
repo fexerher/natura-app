@@ -8,8 +8,8 @@
       no-gutters
     >
         <v-btn
-          v-for="icon in icons"
-          :key="icon"
+          v-for="(icon, index) in icons"
+          :key="index"
           color="white"
           text
           rounded

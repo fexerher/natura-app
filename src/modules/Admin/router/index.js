@@ -27,7 +27,7 @@ const mainMenuRouter = {
             component: () => import('../views/Usuarios.vue') 
         },
         { 
-            path: '/admin/compras' , 
+            path: '/admin/ventas' , 
             name: 'compras', 
             component: () => import('../views/Compras.vue') 
         },
