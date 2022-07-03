@@ -9,8 +9,12 @@
       class="elevation-2"
       style="max-width: 1200px; margin: 0 auto"
     >    
-     <template v-slot:[`item.img`]="{ item }">
-      <v-img :src="item.img"  height="50" width="50">
+     <template v-slot:[`item.img`]="{ item }"  >
+
+      <v-img v-if="pictureModal" alt="..." width="50" 
+      :src="this.pictureModal">
+      </v-img>
+      <v-img v-else :src="item.img"  width="50" >
 
       </v-img>
       </template>
@@ -18,11 +22,12 @@
             <v-toolbar
               flat
             >
-            <h1 class="text-start text-capitalize"  >{{$route.name}}</h1>
+              <h3  class="pr-1 text-start text-capitalize"  >{{$route.name}}</h3>
               <v-spacer></v-spacer>
 
               <v-text-field
-              color="secondary"
+                  class="mx-2"
+                  color="secondary"
                   v-model="search"
                   append-icon="mdi-magnify"
                   label="Buscar"
@@ -111,6 +116,7 @@
                           md="8"
                         >
                           <v-file-input
+                             @change="onFileSelected"
                             v-model="editedItem.imagen"
                             accept="image/png, image/jpeg, image/bmp"
                             placeholder="Pick an avatar"
@@ -255,6 +261,8 @@ export default {
           defaultItem: {
             nombre: '',
           },
+          pictureModal: null,
+          selectedFile: null,
       }
     },
     computed:{
@@ -278,6 +286,16 @@ export default {
       getProductos(){
         this.getproductos()
       },
+      onFileSelected() {
+        this.selectedFile = this.file;
+
+        if (!this.file) {
+          return;
+        }
+        const fr = new FileReader();
+        fr.onload = () => (this.pictureModal = fr.result);
+        fr.readAsDataURL(this.selectedFile);
+      },
       editItem (item) {
         this.editedIndex = this.desserts.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -292,7 +310,7 @@ export default {
 
       deleteItemConfirm () {
         this.desserts.splice(this.editedIndex, 1)
-        this.deleteproducto( this.editedItem )
+        this.deleteproducto( this.editedItem.id )
         this.closeDelete()
       },
 

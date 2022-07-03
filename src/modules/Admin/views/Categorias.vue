@@ -20,10 +20,11 @@
       <v-toolbar
         flat
       >
-       <h1 class="text-start text-capitalize">{{$route.name}}</h1>
+       <h3 class="text-start text-capitalize">{{$route.name}}</h3>
         <v-spacer></v-spacer>
 
          <v-text-field
+         class="mx-2"
          color="secondary"
             v-model="search"
             append-icon="mdi-magnify"

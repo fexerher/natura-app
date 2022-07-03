@@ -170,7 +170,7 @@ export const deleteusuario = async ( {commit}, payload ) => {
 export const editarImagen = async ( {commit},  payload ) => {
 
     const { imagen, id }  = payload
-
+    console.log( payload );
     if(!imagen) return 
     
     try {
@@ -185,11 +185,11 @@ export const editarImagen = async ( {commit},  payload ) => {
          ]
 
         const [ respuestas, respuestas2 ] = await Promise.all( promiseArr )
-
        const producto = {
          ...respuestas.data,
          ...respuestas2.data,
        }
+       console.log( producto );
 
        commit('updateImagen', producto )
        
@@ -203,12 +203,13 @@ export const editarImagen = async ( {commit},  payload ) => {
 
 
 
-export const deleteproducto = async ( {commit}, payload ) => {
+export const deleteproducto = async ( {commit}, id ) => {
     try {
-       const { data } = await apiServer.delete(`/productos/${payload.id}`)
+       const resp = await apiServer.delete(`/productos/${id}`)
 
-       
-       commit('deleteproducto', data )
+       const { producto } = resp.data
+
+       commit('deleteproducto', producto.id)
        
        return {ok: true }
 

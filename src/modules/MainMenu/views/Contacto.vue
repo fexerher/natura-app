@@ -1,101 +1,111 @@
 <template>
-  <v-container style="height: 729px" >
+<div style="height: 715px" >
 
-      <h1>Contactanos</h1>
-      <v-card>
+  <v-container class="mt-10" >
+
+      <v-card style="margin: 0 auto" width="750px" height="100%" class="text-center pa-5" >
+      <h1>Contáctanos</h1>
         <v-form
             ref="form"
             v-model="valid"
             lazy-validation
+            
           >
-          <v-container>
+          <v-container >
             <v-row>
-              <v-col cols="12" sm="3" >
+              <v-col >
                 <v-text-field
-                  v-model="name"
+                  color="dark"
+                  v-model="form.nombre"
                   :rules="nameRules"
                   label="Name"
                   required
                 ></v-text-field>
 
               </v-col>
-                <v-col cols="12" sm="3" >
-               
+                <v-col>
                   <v-text-field
-                    v-model="apellido"
+                    color="dark"
+                    v-model="form.apellido"
                     :rules="apellidoRules"
                     label="Apellido"
                     required
                   ></v-text-field>
-
               </v-col>
             </v-row>
-            <v-row >
-              <v-col cols="12" sm="6" >
+            <v-row>
+              <v-col>
                   <v-text-field
-                    v-model="email"
+                  color="dark"
+                    v-model="form.email"
                     :rules="emailRules"
                     label="E-mail"
                     required
                   ></v-text-field>
               </v-col>
-
             </v-row>
-
-
+            <v-row>
+              <v-col>
+                   <v-textarea
+                     color="dark"
+                    v-model="form.mensaje"
+                    :rules="mensajeRules"
+                    label="Escribenos algo"
+                    required
+                  ></v-textarea>
+              </v-col>
+            </v-row>
             <v-checkbox
+            color="dark"
               v-model="checkbox"
-              :rules="[v => !!v || 'You must agree to continue!']"
+              :rules="[v => !!v || 'Debes estar de acuerdo!']"
               label="Do you agree?"
               required
+              class="mb-4"
             ></v-checkbox>
 
-            <v-btn
-              :disabled="!valid"
-              color="success"
-              class="mr-4"
-              @click="validate"
-            >
-              Validate
-            </v-btn>
-
-            <v-btn
-              color="error"
-              class="mr-4"
-              @click="reset"
-            >
-              Reset Form
-            </v-btn>
-
-            <v-btn
-              color="warning"
-              @click="resetValidation"
-            >
-              Reset Validation
-            </v-btn>
+              <v-btn
+                :disabled="!valid"
+                block
+                color="#000"
+                class="mr-4 white--text"
+                @click="validate"
+              >
+                Enviar
+              </v-btn>
           </v-container>
           </v-form>
       </v-card>
 
   </v-container>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'contacto-main',
+  name: 'contacto-main',
     data: () => ({
+      form: {
+        nombre: '',
+        apellido: '',
+        mensaje: '',
+        email:''
+      },
       valid: true,
       name: '',
       nameRules: [
-        v => !!v || 'Name is required',
+        v => !!v || 'Nombre es obligatorio',
       ],
       email: '',
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        v => !!v || 'E-mail es obligatorio',
+        v => /.+@.+\..+/.test(v) || 'Debe ingresar un e-mail valido',
       ],
         apellidoRules: [
-        v => !!v || 'Apellido is required',
+        v => !!v || 'Apellido es obligatorio',
+      ],
+      mensajeRules: [
+        v => !!v || 'Mensaje es obligatorio',
       ],
       select: null,
       items: [
@@ -110,12 +120,6 @@ export default {
     methods: {
       validate () {
         this.$refs.form.validate()
-      },
-      reset () {
-        this.$refs.form.reset()
-      },
-      resetValidation () {
-        this.$refs.form.resetValidation()
       },
     },
 }

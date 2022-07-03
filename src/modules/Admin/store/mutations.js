@@ -61,13 +61,13 @@ export const deleteusuario = (state, payload) => {
 }
 
 export const updateImagen  = ( state, producto  ) => {
+
     const idx = state.productos.map( cat => cat.id ).indexOf( producto.id )
     
     state.productos[idx] = producto
     
 }
-export const deleteproducto = (state, payload) => {
-   
-    state.productos =  state.productos.filter( ( e ) =>  e.id !== payload.id )
+export const deleteproducto = (state, id ) => {
+    state.productos =  state.productos.filter( ( e ) =>  e.id != id )
 
 }
