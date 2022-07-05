@@ -4,7 +4,10 @@
 export default () => ({
     categorias: [],
     productos: [],
+    usuarios:[],
+    ventas: [],
     cantCategorias: 0,
     cantProductos: 0,
-    usuarios:[]
+    cantVentas: 0,
+    cantUsuarios: 0,
 }) 

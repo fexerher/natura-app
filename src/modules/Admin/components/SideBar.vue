@@ -41,15 +41,12 @@
             >
               <v-list>
                 <v-list-item class="px-2">
-                    <v-list-item-avatar>
-                      <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
-                    </v-list-item-avatar>
                     <v-list-item link>
                     <v-list-item-content>
                       <v-list-item-title class="text-h6">
-                        Sandra Adams
+                        {{user.nombre}}
                         </v-list-item-title>
-                        <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
                 </v-list-item>
@@ -95,7 +92,7 @@ export default {
       }
     },
     computed:{
-        ...mapState('admin', ['notifications']),
+        ...mapState('auth', [ 'user' ]),
         mini: {
           get(){
             return !this.$vuetify.breakpoint.xs ? true : false

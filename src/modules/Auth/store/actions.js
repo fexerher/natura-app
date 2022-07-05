@@ -28,14 +28,15 @@ export const checkAuthentication = async ({commit}) => {
     
     const token =  localStorage.getItem('x-token')
     if(!token){
+
         commit('logout')
         return {ok : false , message: 'no hay token'}
+
     }
     
     try {
-        const {  data   } = await apiServer.post('/auth/lookup', {token})
+        const {  data   } = await apiServer.post('/auth/lookup', { token })
         const { usuario } = data
-        
         const { rol } = usuario
         
         commit('signInUser', { token , usuario } )
@@ -44,6 +45,7 @@ export const checkAuthentication = async ({commit}) => {
         
     } catch (error) {
         commit('logout')
+
         return {ok:false}
         
     }

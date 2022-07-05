@@ -22,13 +22,13 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              color="primary"
+              color="blue"
               dark
               class="mb-2"
               v-bind="attrs"
               v-on="on"
             >
-              New Item
+              Registrar
             </v-btn>
           </template>
           <v-card>
@@ -79,17 +79,6 @@
                       label="Rol"
                     ></v-text-field>
                   </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      disabled
-                      v-model="editedItem.id"
-                      label="Id"
-                    ></v-text-field>
-                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -115,7 +104,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">Está seguro de eliminar este usuario?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -171,14 +160,14 @@ export default {
       editedIndex: -1,
       editedItem: {
         id:'',
-        name: '',
+        nombre: '',
         rol: '',
         email: '',
       },
       defaultItem: {
         id:'',
-        name: '',
-        calories: '',
+        nombre: '',
+        rol: '',
         email: '',
       },
     }),
@@ -186,7 +175,7 @@ export default {
     computed: {
       ...mapGetters('admin', [ 'filterUsuarios' ] ),
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'Nuevo Usuario' : 'Editar Usuario'
       },
       desserts(){
         return this.filterUsuarios

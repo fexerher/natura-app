@@ -10,14 +10,13 @@
       style="max-width: 1200px; margin: 0 auto"
     >    
      <template v-slot:[`item.img`]="{ item }"  >
-
-      <v-img v-if="pictureModal" alt="..." width="50" 
-      :src="this.pictureModal">
-      </v-img>
-      <v-img v-else :src="item.img"  width="50" >
-
-      </v-img>
+        <v-img :src="item.imagen" width="50px"></v-img>
       </template>
+     <template v-slot:[`item.idcategoria`]="{ item }"  >
+        <div>{{item.nombreCat}}</div>
+      </template>
+
+        
         <template v-slot:top>
             <v-toolbar
               flat
@@ -56,12 +55,14 @@
                 </v-btn>
               </template>
               <v-card>
+               <v-form  v-model="valid"  @submit.prevent="save" ref="form" >
                 <v-card-title>
                   <span class="text-h5">{{formTitle}}</span>
                 </v-card-title>
 
                 <v-card-text>
                   <v-container>
+
                     <v-row>
                       <v-col
                         cols="12"
@@ -71,7 +72,7 @@
                         <v-text-field
                           v-model="editedItem.nombre"
                           label="Nombre"
-                          
+                          :rules="nameRules"
                         ></v-text-field>
                       </v-col>
                      
@@ -104,11 +105,16 @@
                           sm="6"
                           md="4"
                         >
-                          <v-text-field
+                        
+                           <v-select
+                            :items="options"
+                            item-text="nombre"
+                            item-value="id"
                             v-model="editedItem.idcategoria"
                             label="Categoria"
-                            
-                          ></v-text-field>
+                            dense
+                            outlined
+                          ></v-select>
                         </v-col>
                           <v-col
                           cols="12"
@@ -116,8 +122,8 @@
                           md="8"
                         >
                           <v-file-input
-                             @change="onFileSelected"
-                            v-model="editedItem.imagen"
+                            v-model="editedItem.img"
+                            type="file"
                             accept="image/png, image/jpeg, image/bmp"
                             placeholder="Pick an avatar"
                             prepend-icon="mdi-camera"
@@ -152,13 +158,15 @@
                     Cancel
                   </v-btn>
                   <v-btn
+                    type="submit"
                     color="blue darken-1"
                     text
-                    @click="save"
+                    :disabled="!valid "
                   >
                     Save
                   </v-btn>
                 </v-card-actions>
+               </v-form>
               </v-card>
             </v-dialog>
             <v-dialog v-model="dialogDelete" max-width="500px">
@@ -202,6 +210,8 @@ export default {
     name: 'productos-main',
     data(){
       return {
+          file:null,
+          valid: false,
           search: '',
           dialog: false,
           dialogDelete: false,
@@ -256,19 +266,30 @@ export default {
             stock: '',
             idcategoria: '',
             imagen: [],
-            id: ''
+            id: 0
           },
           defaultItem: {
-            nombre: '',
+             nombre: '',
+            descripcion: '',
+            precio: '',
+            stock: '',
+            idcategoria: '',
+            imagen: [],
+            id: 0
           },
-          pictureModal: null,
           selectedFile: null,
+          nameRules: [
+            v => !!v || 'Nombre is obligatorio',
+          ],
       }
     },
     computed:{
-      ...mapGetters('admin', ['filterProductos']),
+      ...mapGetters('admin', ['filterProductos', 'categoriasSelect']),
       desserts(){
         return this.filterProductos
+      },
+      options(){
+        return this.categoriasSelect
       },
       formTitle () {
         return this.editedIndex === -1 ? 'Nuevo Producto' : 'Editar Producto'
@@ -286,6 +307,9 @@ export default {
       getProductos(){
         this.getproductos()
       },
+      getCategorias(){
+        this.getcategorias()
+      },
       onFileSelected() {
         this.selectedFile = this.file;
 
@@ -295,6 +319,7 @@ export default {
         const fr = new FileReader();
         fr.onload = () => (this.pictureModal = fr.result);
         fr.readAsDataURL(this.selectedFile);
+
       },
       editItem (item) {
         this.editedIndex = this.desserts.indexOf(item)
@@ -333,17 +358,16 @@ export default {
       async save () {
         if (this.editedIndex > -1) {
         
-          const { ok } =  await this.editarImagen(this.editedItem )
+          const { ok } =  await this.editarproducto( this.editedItem )
 
           if(!ok){
             console.log('error');
           }else{
-            console.log('registrado correctamente ');
+            console.log('editado correctamente ');
            Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
           }
         } else {
-
           const {ok} = await this.saveproducto( this.editedItem )
           if(!ok){
             console.log('error');
@@ -354,11 +378,20 @@ export default {
         }
         this.close()
       },
-      ...mapActions('admin',['getproductos', 'saveproducto' , 'editarImagen', 'deleteproducto']),
-    },
+      ...mapActions('admin',['getproductos',
+                            'getcategorias',
+                            'saveproducto', 
+                            'editarproducto', 
+                            'deleteproducto', 
+                            'editarImagen']),
+      },
     created(){
+      this.getCategorias()
       this.getProductos()
-    }
+    },
+    validate () {
+      this.$refs.form.validate()
+    },
 }
 </script>
 

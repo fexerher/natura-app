@@ -28,6 +28,11 @@ export const setproductos = (state, { rows, count }) => {
     state.cantProductos = count
     state.productos = rows
 }
+export const setventas = (state, { rows, count }) => {
+    
+    state.cantVentas = count
+    state.ventas = rows
+}
 
 export const saveproducto = (state, payload) => {
     
@@ -37,9 +42,10 @@ export const saveproducto = (state, payload) => {
 }
 
 
-export const setusuarios = (state, { rows}) => {
+export const setusuarios = (state, { rows, count }) => {
     
     state.usuarios = rows
+    state.cantUsuarios = count
 }
 
 
@@ -55,19 +61,30 @@ export const editarusuario = (state, payload) => {
     state.usuarios[idx] = payload 
 }
 
+export const editarproducto = (state, payload) => {
+   
+    const idx = state.productos.map( cat => cat.id ).indexOf(payload.id)
+    state.productos[idx] = payload 
+}
+
 export const deleteusuario = (state, payload) => {
    
     state.usuarios = state.usuarios.find(( e )=> e.id != payload.id )
 }
 
-export const updateImagen  = ( state, producto  ) => {
-
-    const idx = state.productos.map( cat => cat.id ).indexOf( producto.id )
-    
-    state.productos[idx] = producto
-    
-}
 export const deleteproducto = (state, id ) => {
     state.productos =  state.productos.filter( ( e ) =>  e.id != id )
-
+    
 }
+
+
+export const updateImagen  = ( state, payload  ) => {
+
+
+   const idx = state.productos.map( cat => cat.id ).indexOf( payload.id )
+    
+   state.productos[idx] = payload
+    
+}
+
+
