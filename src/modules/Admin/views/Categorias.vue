@@ -54,6 +54,7 @@
             </v-btn>
           </template>
           <v-card>
+            <v-form  v-model="valid"  @submit.prevent="save" ref="form" >
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
@@ -69,7 +70,7 @@
                     <v-text-field
                       v-model="editedItem.nombre"
                       label="nombre"
-                      
+                      :rules="categoriaRules"
                     ></v-text-field>
                   </v-col>
                  
@@ -91,11 +92,12 @@
               <v-btn
                 color="blue darken-1"
                 text
-                @click="save"
+                :disabled="!valid "
               >
                 Save
               </v-btn>
             </v-card-actions>
+            </v-form>
           </v-card>
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
@@ -138,6 +140,7 @@ import { mapActions, mapGetters } from 'vuex'
   export default {
     name: 'categoria-admin',
     data: () => ({
+      valid: false,
       search: '',
       dialog: false,
       dialogDelete: false,
@@ -166,7 +169,10 @@ import { mapActions, mapGetters } from 'vuex'
       defaultItem: {
         nombre: '',
       },
-      
+      categoriaRules:[
+         v => !!v || 'Categoria is obligatorio',
+         v => /^[A-Za-z]+$/.test(v) || 'Carecteres incorrectos',
+      ]
     }),
 
     computed: {

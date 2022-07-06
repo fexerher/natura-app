@@ -84,7 +84,7 @@
                         <v-text-field
                           v-model="editedItem.precio"
                           label="Precio"
-                          
+                          :rules="precioRules"
                         ></v-text-field>
                       </v-col>
                         <v-col
@@ -95,7 +95,7 @@
                           <v-text-field
                             v-model="editedItem.stock"
                             label="Stock"
-                            
+                            :rules="stockRules"
                           ></v-text-field>
                         </v-col>
                     </v-row>
@@ -114,6 +114,7 @@
                             label="Categoria"
                             dense
                             outlined
+                            :rules="categoriaRules"
                           ></v-select>
                         </v-col>
                           <v-col
@@ -128,6 +129,7 @@
                             placeholder="Pick an avatar"
                             prepend-icon="mdi-camera"
                             label="Imagen Producto"
+                            :rules="descripcionRules"
                           ></v-file-input>
                         </v-col>
                       </v-row>
@@ -141,7 +143,7 @@
                               outlined
                               v-model="editedItem.descripcion"
                               label="Descripción"
-                              
+                              :rules="descripcionRules"
                             ></v-textarea>
                           </v-col>
                       </v-row>
@@ -278,8 +280,23 @@ export default {
             id: 0
           },
           selectedFile: null,
+          categoriaRules: [
+             v => !!v || 'Categoria is obligatoria',
+          ],
           nameRules: [
             v => !!v || 'Nombre is obligatorio',
+            v => /^[A-Za-z]+$/.test(v) || 'Carecteres incorrectos',
+          ],
+          precioRules: [
+            v => !!v || 'Precio is obligatorio',
+            v => /^\d+$/.test(v) || 'Solo numeros',
+          ],
+          stockRules: [
+            v => !!v || 'Stock is obligatorio',
+            v => /^\d+$/.test(v) || 'Solo numeros',
+          ],
+           descripcionRules: [
+            v => !!v || 'Descripcion is obligatorio',
           ],
       }
     },
